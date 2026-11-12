@@ -14,7 +14,7 @@ Suppose your instance is running and has a public IP address, but `ssh` cannot c
 
 **Your answer:** Which path did you take in the console (service → page → tab)?
 
-...
+The security group bars access, like a firewall. Ssh can't connect if there's no inbound rule that lets port 22 aka SSH in the IP. To fix this, we have to add or edit the inbound rules. I moved from EC2 to Security group to launch-wizard-1 to Inbound rules tab. 
 
 ## 2. Lambda: why didn't my function run?
 
@@ -26,7 +26,7 @@ Suppose you uploaded a new book to your bucket, but several minutes later MongoD
 
 **Your answer:** Which path did you take in the console (service → page → tab)?
 
-...
+I took Lambda to Functions to book-analyzer-dev-analyze_new_book to Function overview and Configuration to Triggers. The S3 event on the S3 begins the function if a txt. file is added. When a trigger is missing, the function doesn't start. 
 
 ## 3. Lambda: where do I find the error?
 
@@ -38,7 +38,7 @@ Suppose the function did start, but MongoDB still has no document for the book. 
 
 **Your answer:** Which path did you take in the console (service → page → tab)?
 
-...
+Lambda to Functions to book-analyzer-dev-analyze_new_book to Moniter tab to View CloudWatch logs to log group /aws/lambda/book-analyzer-dev-analyze_new_book to the newest log stream. All the function logs go to CloudWatch logs. 
 
 ## 4. EC2 or Lambda: a backlog or new uploads?
 
@@ -54,4 +54,6 @@ For comparison, typical times in this lab:
 
 **Your answer:**
 
-...
+Case A: EC2. Since this is a one-time job, we can just start at an instance, run analyze.py, and terminate. If we used Lambda, we'd have to do 5,000 individual triggers. EC2 makes the boostrap time shorter. 
+
+Case B: Lambda. Since this is random and multiple times a day, the S3 trigger would start the Lambda quickly while an EC2 instance would be slower. A book would only take 2 seconds for each as opposed to 20 seconds. Faster pace, shorter time.
